@@ -55,7 +55,7 @@ module.exports = function(grunt) {
           var padding ='';
           var ind = start - 1;
           // TODO: Fix this hack
-          while(page.charAt(ind)===' ' || page.charAt(ind)==='  '){
+          while(page.charAt(ind)===' ' || page.charAt(ind)==='  ' || page.charAt(ind)==='\t'){
             padding += page.charAt(ind);
             ind -= 1;
           }

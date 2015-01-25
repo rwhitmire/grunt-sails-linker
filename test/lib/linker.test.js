@@ -6,14 +6,7 @@ describe("linker", function() {
   describe("escapeSpecialChars", function() {
     it("should escape special characters", function() {
       var result = linker.escapeSpecialChars("/.**-");
-      assert.equal(result, '\\/\\.\\*\\*\\-');
-    });
-  });
-
-  describe("getPaddingStr", function() {
-    it("should return padded string", function() {
-      var result = linker.getPaddingStr(5);
-      assert.equal(result, '     ');
+      assert.equal(result, '\\/\\.\\*\\*\\-', 'not all characters are escaped');
     });
   });
 
@@ -24,8 +17,34 @@ describe("linker", function() {
     });
 
     it("should apply proper padding to script tags", function() {
-      var result = linker.getScriptTags(['foo/bar.js'], 2);
+      var result = linker.getScriptTags(['foo/bar.js'], '  ');
       assert.equal(result, '\n  <script src="foo/bar.js"></script>\n  ');
+    });
+  });
+
+  describe('getPaddingChars', function () {
+    it('should handle spaces', function () {
+      var html = '\n  <!--SCRIPTS src="foo/bar.js"-->';
+      var result = linker.getPaddingChars(html);
+      assert.equal(result, '  ');
+    });
+
+    it('should handle tabs', function () {
+      var html = '\n\t\t<!--SCRIPTS src="foo/bar.js"-->';
+      var result = linker.getPaddingChars(html);
+      assert.equal(result, '\t\t');
+    });
+
+    it('should handle cr', function () {
+      var html = '\r  <!--SCRIPTS src="foo/bar.js"-->';
+      var result = linker.getPaddingChars(html);
+      assert.equal(result, '  ');
+    });
+
+    it('should handle crlf', function () {
+      var html = '\n \r\n  <!--SCRIPTS src="foo/bar.js"-->';
+      var result = linker.getPaddingChars(html);
+      assert.equal(result, '  ');
     });
   });
 

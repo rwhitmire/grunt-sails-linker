@@ -6,7 +6,7 @@ describe("linker", function() {
   describe("escapeSpecialChars", function() {
     it("should escape special characters", function() {
       var result = linker.escapeSpecialChars("/.**-");
-      assert.equal(result, '\\/\\.\\*\\*\\-', 'not all characters are escaped');
+      assert.equal(result, '\\/\\.\\*\\*\\-');
     });
   });
 
